@@ -60,9 +60,26 @@ if 'plan_text' not in st.session_state: st.session_state.plan_text = ""
 if step == "Step 1: 基本情報":
     st.header("📋 Step 1: 基本情報の入力")
     col1, col2 = st.columns(2)
+    
     with col1:
-        st.session_state.industry = st.selectbox("業種", ["小売業", "飲食業", "サービス業", "建設業", "IT"], index=0)
+        # 💡 選択肢に「その他」を追加
+        st.session_state.industry = st.selectbox(
+            "業種",["小売業", "飲食業", "サービス業", "建設業", "IT", "その他"], 
+            index=0
+        )
+        
+        # 💡 「その他」が選ばれた時だけ、詳細を書く欄を出す
+        if st.session_state.industry == "その他":
+            st.session_state.other_industry = st.text_input(
+                "具体的な事業内容を教えてください", 
+                value=st.session_state.get('other_industry', ""),
+                placeholder="例：出張型のペット介護サービス"
+            )
+        else:
+            st.session_state.other_industry = "" # その他以外なら空にしておく
+            
         st.session_state.shop_name = st.text_input("屋号・会社名", value=st.session_state.get('shop_name', ""))
+        
     with col2:
         st.session_state.target = st.text_area("ターゲット顧客", value=st.session_state.get('target', ""))
         st.session_state.strength = st.text_area("独自の強み", value=st.session_state.get('strength', ""))
