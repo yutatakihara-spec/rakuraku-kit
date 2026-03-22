@@ -65,7 +65,7 @@ elif step == "S3":
                 s_target = st.session_state.get('target_input', '')
                 s_strength = st.session_state.get('strength_input', '')
                 
-                model = genai.GenerativeModel('gemini-1.5-flash')
+                model = genai.GenerativeModel('gemini-flash-latest')
                 
                 # 指示（プロンプト）は日本語でも、本体の通信に載るのでOK
                 prompt = f"あなたは{s_ind}のプロです。店名「{s_name}」の事業計画書を日本語で詳しく作成し、最後に「以上」で終わらせてください。ターゲット:{s_target}、強み:{s_strength}。"
