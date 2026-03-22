@@ -108,20 +108,27 @@ elif step == "Step 3: AI作成・保存":
     st.header("📄 Step 3: 事業計画書の完成")
     
     if st.button("AIで事業計画書をフル生成"):
-        with st.spinner("AIが清書しています..."):
-            try:
-                model = genai.GenerativeModel('gemini-flash-latest')
-                f = st.session_state.finance_data
-                prompt = f"""
-                あなたは{st.session_state.industry}のコンサルタントです。
-                店名「{st.session_state.shop_name}」の事業計画書を作成してください。
-                損益分岐点（月{f['breakeven']:.1f}万円）をどう超えるかの戦略を詳しく書き、
-                最後は「以上」で終わらせてください。
-                """
-                response = model.generate_content(prompt)
-                st.session_state.plan_text = response.text
-            except Exception as e:
-                st.error(f"エラー: {e}")
+            with st.spinner("AIが清書しています..."):
+                try:
+                    model = genai.GenerativeModel('gemini-flash-latest')
+                    f = st.session_state.finance_data
+                    
+                    # 💡 「その他」の場合は、入力された具体的な事業内容をAIに伝える
+                    industry_name = st.session_state.industry
+                    if industry_name == "その他" and st.session_state.other_industry:
+                        industry_name = f"「{st.session_state.other_industry}」という事業"
+                    
+                    prompt = f"""
+                    あなたは{industry_name}の専門コンサルタントです。
+                    店名「{st.session_state.shop_name}」の事業計画書を作成してください。
+                    
+                    損益分岐点（月{f['breakeven']:.1f}万円）をどう超えるかの具体的な集客・営業戦略を詳しく書き、
+                    最後は「以上」で終わらせてください。
+                    """
+                    response = model.generate_content(prompt)
+                    st.session_state.plan_text = response.text
+                except Exception as e:
+                    st.error(f"エラー: {e}")
 
     if st.session_state.plan_text:
         st.markdown(st.session_state.plan_text)
