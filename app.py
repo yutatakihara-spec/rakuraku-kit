@@ -8,7 +8,7 @@ from io import BytesIO
 if "GOOGLE_API_KEY" in st.secrets:
     api_key = st.secrets["GOOGLE_API_KEY"]
 else:
-    api_key = "AIza..." # ローカルPC用
+    api_key = "" # ローカルPC用
 
 genai.configure(api_key=api_key.strip(), transport='rest')
 
