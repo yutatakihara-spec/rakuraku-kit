@@ -10,7 +10,7 @@ if "GOOGLE_API_KEY" in st.secrets:
     api_key = st.secrets["GOOGLE_API_KEY"]
 else:
     # ローカルPCでテストする時用（後ほど設定するファイルから読み込む）
-    api_key = "AIzaSyAxQkcxjOjd16tsoQQBlvXrjrEFAYnFikY" 
+    api_key = "あなたのAPIキーをここに" 
 
 genai.configure(api_key=api_key.strip(), transport='rest')
 
