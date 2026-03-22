@@ -96,7 +96,7 @@ elif step == "Step 3: 計画書作成":
             with st.spinner("AIコンサルタントが執筆中..."):
                 try:
                     # 確実に動くモデル名を使用
-                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    model = genai.GenerativeModel('gemini-flash-latest')
                     f = st.session_state.get('finance_data', {"breakeven": 0})
                     ind = st.session_state.other_industry if st.session_state.industry == "その他" else st.session_state.industry
                     
